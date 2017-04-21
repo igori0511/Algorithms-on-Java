@@ -1,131 +1,112 @@
+import edu.princeton.cs.algs4.WeightedQuickUnionUF;
+
 public class Percolation {
-    
+
     private WeightedQuickUnionUF percolation;
-    private WeightedQuickUnionUF full;
-    private boolean openClosed[];
-    private final int size;
-    
-    public Percolation(int N) 
-    {
-        // create an N-by-N brid
-        // array that contains percolation grid,containts two virtual sites
-        percolation = new WeightedQuickUnionUF(N*N+2); 
-        // array that contains one virtual site 
-        full        = new WeightedQuickUnionUF(N*N+1);
-        // array that keep track wich site is opened
-        openClosed  = new boolean[N*N];
-        // store the size of the array
-        size        = N;
+    private WeightedQuickUnionUF fullPercolation;
+    private boolean[] connected;
+    private int openSites;
+    private int virtualNodesSize = 2;
+    private int percolationCubeSize;
+    private int topVirtualSiteIndex;
+    private int bottomVirtualSiteIndex;
+    private int percolationNodesSize;
+
+    public Percolation(int n) {
+        if (n <= 0)
+            throw new IllegalArgumentException();
+        percolationNodesSize = n * n + virtualNodesSize;
+        percolation = new WeightedQuickUnionUF(percolationNodesSize);
+        fullPercolation = new WeightedQuickUnionUF(percolationNodesSize - 1);
+        connected = new boolean[percolationNodesSize];
+        topVirtualSiteIndex = percolationNodesSize - 2;
+        bottomVirtualSiteIndex = percolationNodesSize - 1;
+        openSites = 0;
+        percolationCubeSize = n;
     }
-    
-    // Map 2D coordinates to 1D coordinates
-     private int xyTo1d(int i , int j)
-     {
-         //check if the indexes are in range
-         indeces(i,j); 
-         // return 1D index
-         return ((i-1) * size) + (j-1);
-     }
-     
-     // check the indices
-     private void indeces(int i, int j)
-     {
-         // check if index "i" is in range
-         if (i <= 0 || i > size){
-             throw new IndexOutOfBoundsException("row index i out of bounds");
-         }
-         // check if index "j" is in range
-         if (j <= 0 || j > size){
-             throw new IndexOutOfBoundsException("row index j out of bounds");
-         }
-     }
-     
-    // Open a site   
-    public void open(int i, int j)
-    {
-      // validate indices
-      indeces(i,j);
-      // calculate global index
-      int index = xyTo1d(i,j);
-      // open site
-      openClosed[index] = true;
-      //connect to top virtual site if the index "i" is first row
-      if(i == 1){
-          percolation.union(size*size,index);
-          full.union(size*size,index);
-      }
-      //connect to bottom virtual site if index "i" is last row
-      if(i == size){
-         percolation.union(size*size+1,index); 
-      }   
-      
-      
-      //union site with it's neighbors.
-      // union with j + 1 neighbour
-      if(j+1 <= size)
-      {
-        if(openClosed[index+1] == true)
-        {
-           percolation.union(index,index+1);
-           full.union(index,index+1);
-        }  
-      }
-      // union with j - 1 neighbour
-      if(j - 1  > 0)
-      {
-        if(openClosed[index-1] == true)
-        {
-           percolation.union(index,index-1);
-           full.union(index,index-1);
-        }  
-      }  
-      // union with i + 1 neighbour
-      if(i+1 <= size)
-      {
-        int indexI = xyTo1d(i+1,j);  
-        if(openClosed[indexI] == true)
-        {
-           percolation.union(index,indexI);
-           full.union(index,indexI);
+
+    public void open(int row, int col) {
+        validateIndexes(row, col);
+        int index = convert2DindexTo1D(row, col);
+        int indexRow = convert2DindexTo1D(row - 1, col);
+
+        incrementNumberOfSites(row, col);
+
+        connected[index] = Boolean.TRUE;
+
+        if (row == 1) {
+            percolation.union(topVirtualSiteIndex, index);
+            fullPercolation.union(topVirtualSiteIndex, index);
         }
-      }  
-      // union with i - 1 neighbour 
-      if(i-1 > 0)
-      {
-        int indexK = xyTo1d(i-1,j);  
-        if(openClosed[indexK] == true)
-        {
-           percolation.union(index,indexK);
-           full.union(index,indexK);
-        }  
-      }
+
+        if (row == percolationCubeSize) {
+            percolation.union(bottomVirtualSiteIndex, index);
+        }
+
+        // connect site for row - 1
+        if (row - 1 > 0 && connected[indexRow]) {
+            percolation.union(index, indexRow);
+            fullPercolation.union(index, indexRow);
+        }
+        // connect site for row + 1
+        indexRow = convert2DindexTo1D(row + 1, col);
+        if (row + 1 <= percolationCubeSize && connected[indexRow]) {
+            percolation.union(index, indexRow);
+            fullPercolation.union(index, indexRow);
+        }
+        // connect site for col - 1
+        if (col - 1 > 0 && connected[index - 1]) {
+            percolation.union(index, index - 1);
+            fullPercolation.union(index, index - 1);
+        }
+        // connect site for col + 1
+        if (col + 1 <= percolationCubeSize && connected[index + 1]) {
+            percolation.union(index, index + 1);
+            fullPercolation.union(index, index + 1);
+        }
+    }
+
+    public boolean isOpen(int row, int col) {
+        validateIndexes(row, col);
+        int index = convert2DindexTo1D(row, col);
+        return connected[index] ? Boolean.TRUE : Boolean.FALSE;
+    }
+
+    public boolean isFull(int row, int col) {
+        validateIndexes(row, col);
+        return fullPercolation.connected(convert2DindexTo1D(row, col), topVirtualSiteIndex) && isOpen(row, col);
+    }
+
+    public int numberOfOpenSites() {
+        return openSites;
+    }
+
+    public boolean percolates() {
+        return percolation.connected(topVirtualSiteIndex, bottomVirtualSiteIndex);
+    }
+
+    private int convert2DindexTo1D(int row, int col) {
+        return ((row - 1) * percolationCubeSize) + (col - 1);
+    }
+
+    private void validateIndexes(int row, int col) {
+        if (row <= 0 || row > percolationCubeSize) {
+            throw new IndexOutOfBoundsException("row index i out of bounds");
+        }
+
+        if (col <= 0 || col > percolationCubeSize) {
+            throw new IndexOutOfBoundsException("row index j out of bounds");
+        }
+    }
+
+    private void incrementNumberOfSites(int row, int col) {
+        if (!isOpen(row, col)) {
+            ++openSites;
+        }
+    }
+
+    public static void main(String[] args) {
 
     }
-    
-    // check if the site is open
-    public boolean isOpen(int i, int j){
-    
-      // calculate blobal index  
-      int index = xyTo1d(i,j);  
-      //check if the site is opened
-      if(openClosed[index] == true){return true;}
-      else {return false;}      
-        
-    }
-    
-    // check if the site if full
-    public boolean isFull(int i, int j)
-    { 
-       // check if indices i and j are in the expect range
-       indeces(i,j);
-       // check if the site is full , return true if the site is full else otherwise
-       return full.connected(xyTo1d(i,j),size*size);
-       
-    }
-    // check if the system percolates
-    public boolean percolates() 
-    {
-        //return true if the system percolates
-        return percolation.connected(size*size,size*size+1);        
-    }
+
 }
