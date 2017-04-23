@@ -1,5 +1,3 @@
-package com.princeton.deque.junit.tests;
-
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 

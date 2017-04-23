@@ -1,5 +1,3 @@
-package com.princeton.deque.junit.tests;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
