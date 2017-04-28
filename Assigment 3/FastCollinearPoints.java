@@ -18,6 +18,7 @@ public class FastCollinearPoints {
         System.arraycopy(points, 0, copyPoints, 0, points.length);
         calculateCollinearPoints();
         resize(arraySize);
+        
     }
 
     public int numberOfSegments() {
