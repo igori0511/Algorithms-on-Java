@@ -1,3 +1,8 @@
+import edu.princeton.cs.algs4.In;
+import edu.princeton.cs.algs4.MinPQ;
+import edu.princeton.cs.algs4.Stack;
+import edu.princeton.cs.algs4.StdOut;
+
 /**
  * Solver for 8 Puzzle
  * The problem: The 8-puzzle problem is a puzzle invented and popularized 

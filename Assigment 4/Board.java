@@ -11,6 +11,9 @@
  * @version (a version number or a date)
  */
 import java.util.Arrays;
+
+import edu.princeton.cs.algs4.Queue;
+import edu.princeton.cs.algs4.StdRandom;
 public class Board
 {
    // private array that will contain our board 
