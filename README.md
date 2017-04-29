@@ -12,6 +12,5 @@
 **1. [Assignment 6](http://coursera.cs.princeton.edu/algs4/assignments/wordnet.html)**
 
 ###Custom jar files with additional libraries used in assignments:
-***stdlib.jar***
 ***algs4.jar***
 
