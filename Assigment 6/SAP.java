@@ -1,5 +1,8 @@
-import java.util.Set;
-import java.util.HashSet;
+import edu.princeton.cs.algs4.BreadthFirstDirectedPaths;
+import edu.princeton.cs.algs4.Digraph;
+import edu.princeton.cs.algs4.In;
+import edu.princeton.cs.algs4.StdIn;
+import edu.princeton.cs.algs4.StdOut;
 
 
 public class SAP{
@@ -30,7 +33,7 @@ public class SAP{
     }
     
     //run main algorithm to compute the SAP(Shortest ancestor path)
-    private int MainAlgo(BreadthFirstDirectedPaths P1,BreadthFirstDirectedPaths P2)
+    private int MainAlgo(BreadthFirstDirectedPaths P1, BreadthFirstDirectedPaths P2)
     {
         
        // set min

@@ -1,3 +1,7 @@
+import edu.princeton.cs.algs4.Digraph;
+import edu.princeton.cs.algs4.DirectedCycle;
+import edu.princeton.cs.algs4.In;
+
 import java.util.HashMap;
 import java.util.Set;
 import java.util.ArrayList;
@@ -57,7 +61,7 @@ public class WordNet{
         }
         //prit for testing
        // System.out.println(nounsToId);
-        //System.out.println(idToNouns); 
+        //System.out.println(idToNouns);
         //third stage read hypernyms to create a digraph
         this.G = new Digraph(synsetId+1);
         //System.out.println(synsetId);
