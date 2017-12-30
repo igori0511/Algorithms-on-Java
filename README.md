@@ -8,9 +8,10 @@
 4. [Assignment 4](http://coursera.cs.princeton.edu/algs4/assignments/8puzzle.html)
 5. [Assignment 5](http://coursera.cs.princeton.edu/algs4/assignments/kdtree.html)**
 
-###Assignment 6-7 specifications:
-**1. [Assignment 6](http://coursera.cs.princeton.edu/algs4/assignments/wordnet.html)**
-**2. [Assignment 7](http://coursera.cs.princeton.edu/algs4/assignments/seam.html)**
+###Assignment 6-8 specifications:
+**6. [Assignment 6](http://coursera.cs.princeton.edu/algs4/assignments/wordnet.html)**
+**7. [Assignment 7](http://coursera.cs.princeton.edu/algs4/assignments/seam.html)**
+**8. [Assignment 8](http://coursera.cs.princeton.edu/algs4/assignments/baseball.html)**
 
 ###Custom jar files with additional libraries used in assignments:
 ***algs4.jar***
