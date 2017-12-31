@@ -1,5 +1,5 @@
 ###Assignments 1 - 5 is the part of the course Algorithms part 1 on www.coursera.org
-###Assignment 6 - 7 is the part of the Algorithms part 2 course on www.coursera.org
+###Assignment 6 - 9 is the part of the Algorithms part 2 course on www.coursera.org
 
 ###Assigment 1-5 specifications:
  [Assignment 1](http://coursera.cs.princeton.edu/algs4/assignments/percolation.html)
