@@ -13,6 +13,7 @@
  [Assignment 7](http://coursera.cs.princeton.edu/algs4/assignments/seam.html)
  [Assignment 8](http://coursera.cs.princeton.edu/algs4/assignments/baseball.html)
  [Assignment 9](http://coursera.cs.princeton.edu/algs4/assignments/boggle.html)
+ [Assignment 10](http://coursera.cs.princeton.edu/algs4/assignments/burrows.html)
 
 ###Custom jar files with additional libraries used in assignments:
 ***algs4.jar***
